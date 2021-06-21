@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple Search</title>
+    <link rel="stylesheet" href="./style.css" />
+</head>
+<body>
+    <div class="container">
+        <div class="heading">Simple way to implement string searching in JavaScript</div>
+        <div class="object-container">
+            <div class="title">
+            </div>
+            <div class="data">
+                <div class="content-container readonly">
+                    <div class="content-data" contenteditable="false" searchbox="search">
+                        <div>
+                            Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+                        </div>
+                    </div>
+                    <div class="content-info">
+                        <div class="character-count">
+                            <span class="h-light">Total Characters</span>
+                            <span class="v-light">0</span>
+                        </div>
+                        <div class="space-count">
+                            <span class="h-light">Total Spaces</span>
+                            <span class="v-light">0</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="title">
+                <!-- Search For Word -->
+            </div>
+            <div class="data">
+                <div class="content-container readonly no-border">
+                    <div class="input-group">
+                        <input type="text" placeholder="Search" autofocus class="search input" target="content-data" result="content-data" count="rslt" validator="match-case"/>
+                        <!-- <button class="button search-button" to="search" from="content-data" result="content-dat" count="rslt">Search</button> -->
+                        <div class="case-control">
+                            <input type="checkbox" name="matchcase" id="match-case" class="match-case" target="search" />
+                            <label for="match-case">Match Case</label>
+                        </div>
+                    </div>
+                    <div class="result">
+                        <span class="h-big">Total Occurance</span>
+                        <span class="v-big rslt">0</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="heading">Source Code</div>
+        <div class="object-container">
+            <div class="code">
+                <pre>
+                    <span class="comment">//search case sensitive </span>
+                    <span class="function">
+                        function search(key, string) {
+                            let splited_source = string.split(key);
+                            let total_occurance = splited_source.length-1;
+                            let result_str = splited_source.join(&quot;&lt;span class=&#39;selected&#39;&gt;&quot;+key+&quot;&lt;/span&gt;&quot;);
+                            return [total_occurance, result_str];
+                        }
+                    </span>
+                    <span class="comment">//search case insensitive</span>
+                    <span class="function">
+                        function searchCI(key, string) {
+                            let splited_source = string.toLowerCase().split(key.toLowerCase());
+                            let total_occurance = splited_source.length-1;
+                            let start = 0;
+                            let length = key.length;
+                            let new_string = &quot;&quot;;
+                            for (let i=0; i&lt;total_occurance; i++) {
+                                start += splited_source[i].length;
+                                let temp_key = string.substr(start+i, length);
+                                let start_string= i==0?string.slice(0, start):new_string.slice(0, start+i+(i*30));
+                                new_string = start_string+&quot;&lt;span class=&#39;selected&#39;&gt;&quot;+temp_key+&quot;&lt;/span&gt;&quot;+string.slice(start+length+i);
+                                start += length-1;
+                            }
+                            if (new_string.length &lt;= 0)
+                                return [total_occurance, string];
+                            else
+                                return [total_occurance, new_string];
+                        }
+                    </span>
+                </pre>
+            </div>
+        </div>
+    </div>
+    <script src="./script.js"></script>
+</body>
+</html>
